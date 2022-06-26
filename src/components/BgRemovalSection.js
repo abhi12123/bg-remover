@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 import canvasScreenshot from "canvas-screenshot";
+import ImageResize from "./ImageResize";
+import Resizer from "react-image-file-resizer";
+import Reducer from "./Reducer";
 
 export default function BgRemovalSection() {
   const canvasElementRef = useRef();
   const videoElementRef = useRef();
 
-  const handleLoadEditor = () => {
-      //
+  const handleLoadCropper = () => {
+    //
   };
 
   const handleCaptureCanvas = async () => {
@@ -69,6 +72,13 @@ export default function BgRemovalSection() {
     camera.start();
   };
 
+  const getSize = async () => {
+    const URL_TO_IMG = document.getElementById('new-image').src;
+    console.log(URL_TO_IMG)
+    const fileImg = await fetch(URL_TO_IMG).then(r => r.blob());
+    console.log(fileImg.size*0.001)
+  }
+
   return (
     <div>
       <div className="container">
@@ -80,9 +90,11 @@ export default function BgRemovalSection() {
           height="475px"
         ></canvas>
       </div>
+      <Reducer/>
       <button onClick={() => handleStartCamera()}>Start</button>
       <button onClick={() => handleCaptureCanvas()}>Capture</button>
-      <button onClick={() => handleLoadEditor()}>Load Editor</button>
+      <button onClick={() => handleLoadCropper()}>Load Cropper</button>
+      <button onClick={()=>getSize()}>Get Size</button>
     </div>
   );
 }

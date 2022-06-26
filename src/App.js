@@ -1,10 +1,10 @@
 import "./App.css";
-import BgRemovalSection from "./components/BgRemovalSection";
+import Homepage from "./components/Homepage";
 
 function App() {
   return (
     <div className="App">
-      <BgRemovalSection/>
+      <Homepage/>
     </div>
   );
 }
