@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { getSize } from "../helper/helper";
+import {  } from "../helper/helper";
 import Reducer from "./tools/Reducer";
 
 export default function EditedImage({
-  defaultEditedFile,
-  defaultEditedFileData,
+  uploadedFile,
+  uploadedFileData,
 }) {
-  const [editedFile, setEditedFile] = useState(defaultEditedFile);
-  const [editedFileData, setEditedFileData] = useState(defaultEditedFileData);
+  const [editedFile, setEditedFile] = useState(uploadedFile);
+  const [editedFileData, setEditedFileData] = useState(uploadedFileData);
 
   useEffect(() => {
-    setEditedFileData(defaultEditedFileData);
-  }, [defaultEditedFileData]);
+    setEditedFileData(uploadedFileData);
+  }, [uploadedFileData]);
 
   useEffect(()=>{
-    getSize(editedFile).then((size)=>{
-        console.log(size)
-    })
+    // getSize(editedFile).then((size)=>{
+    //     console.log(size)
+    // })
   },[editedFile])
 
   return (
@@ -44,7 +44,7 @@ export default function EditedImage({
             </ul>
           </div>
           <div className="w3-col l4 m4 s12">
-            <Reducer editedFile={editedFile} setEditedFile={setEditedFile}/>
+            <Reducer uploadedFile={uploadedFile} editedFile={editedFile} setEditedFile={setEditedFile}/>
           </div>
           <div className="w3-col l4 m4 s12">x</div>
         </div>

@@ -3,14 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 export default function UploadImage({
   uploadedFile,
   setUploadedFile,
-  originalFileData,
-  setOriginalFileData,
+  uploadedFileData,
+  setUploadedFileData,
 }) {
   const originalImageRef = useRef();
   useEffect(() => {
     if (originalImageRef.current) {
-      setOriginalFileData({
-        ...originalFileData,
+      setUploadedFileData({
+        ...uploadedFileData,
         width: originalImageRef.current.naturalWidth,
         height: originalImageRef.current.naturalHeight,
       });
@@ -24,28 +24,28 @@ export default function UploadImage({
       <div className="w3-card w3-margin w3-padding w3-center">
         <h3 className="">Upload Image</h3>
         <input
-          onChange={(e) =>
-            setUploadedFile(URL.createObjectURL(e.target.files[0]))
-          }
+          onChange={(e) => {
+            setUploadedFile(e.target.files[0]);
+          }}
           type="file"
           accept="image/*"
         ></input>
         {uploadedFile && (
           <div>
             <img
-              src={uploadedFile}
+              src={URL.createObjectURL(uploadedFile)}
               className="w3-card"
               style={{ height: "200px" }}
               ref={originalImageRef}
             />
             <ul>
-              {Object.keys(originalFileData).map((key, index) => {
+              {uploadedFileData && Object.keys(uploadedFileData).map((key, index) => {
                 return (
                   <li
                     key={index}
                     style={{ width: "fit-content", margin: "auto" }}
                   >
-                    {key}:{originalFileData[key]}
+                    {key}:{uploadedFileData[key]}
                   </li>
                 );
               })}

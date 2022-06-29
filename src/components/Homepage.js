@@ -1,29 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { getDimensions, getSize } from "../helper/helper";
+import { useSelector } from "react-redux";
+import { getDimensions } from "../helper/helper";
 import EditedImage from "./EditedImage";
 import UploadImage from "./UploadImage";
 
 export default function Homepage() {
   const [uploadedFile, setUploadedFile] = useState(undefined);
-  const [originalFileData, setOriginalFileData] = useState(undefined);
+  const [uploadedFileData, setUploadedFileData] = useState(undefined);
+
+  const count = useSelector((state) => state.image.originalFile);
+  console.log(count)
 
   useEffect(() => {
-    getSize(uploadedFile).then((size)=>{
-        setOriginalFileData({...originalFileData,size:`${size} KB`})
-    })
+    if (!uploadedFile) return;
+    console.log(uploadedFile);
+    setUploadedFileData({
+      ...uploadedFileData,
+      size: `${uploadedFile.size * 0.001} KB`,
+    });
   }, [uploadedFile]);
-
-  console.log(originalFileData)
+  
   return (
     <div>
       <h1 className="w3-center">Application Photo Editor</h1>
       <UploadImage
         uploadedFile={uploadedFile}
+
+        
         setUploadedFile={setUploadedFile}
-        originalFileData={originalFileData}
-        setOriginalFileData={setOriginalFileData}
+        uploadedFileData={uploadedFileData}
+        setUploadedFileData={setUploadedFileData}
       />
-      {uploadedFile && <EditedImage defaultEditedFile={uploadedFile} defaultEditedFileData={originalFileData}/>}
+      {uploadedFile && (
+        <EditedImage
+          uploadedFile={uploadedFile}
+          uploadedFileData={uploadedFileData}
+        />
+      )}
     </div>
   );
 }
